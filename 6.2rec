@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+// Рекурсивна функція для знаходження мінімального елемента
+int findMin(const std::vector<int>& a, int index, int currentMin) {
+    if (index == a.size()) {
+        return currentMin; // базовий випадок
+    }
+    return findMin(a, index + 1, std::min(currentMin, a[index]));
+}
+
+// Рекурсивна функція для знаходження максимального елемента
+int findMax(const std::vector<int>& a, int index, int currentMax) {
+    if (index == a.size()) {
+        return currentMax; 
+    }
+    return findMax(a, index + 1, std::max(currentMax, a[index]));
+}
+
+// Основна функція, яка обчислює середнє арифметичне
+double calculateAverage(const std::vector<int>& a) {
+    if (a.empty()) {
+        throw std::invalid_argument("Масив не може бути порожнім!");
+    }
+    int minElement = findMin(a, 0, a[0]);
+    int maxElement = findMax(a, 0, a[0]);
+    return (minElement + maxElement) / 2.0;
+}
+
+int main()
+{
+
+    std::vector<int> a = { 5, 2, 8, 3, 1, 7 };
+    try {
+        double average = calculateAverage(a);
+        std::cout << "a: " << average << std::endl;
+    }
+    catch (const std::exception& e) {
+        std::cerr << "false: " << e.what() << std::endl;
+    }
+    return 0;
+}
